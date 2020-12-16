@@ -1,11 +1,6 @@
 blueprint:
   name: Deconz - Philips Hue Dimmer Switch - Custom Actions
-  description: 'Control lights with a Philips Hue Dimmer Switch.
-
-
-    Each of the 4 cuttons will all for customisation of the action
-
-    '
+  description: 'Control Devices from Philip Hue Dimmer Remote via Deconz'
   domain: automation
   input:
     remote:
