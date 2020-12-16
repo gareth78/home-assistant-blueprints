@@ -68,13 +68,13 @@ action:
 #        target: !input 'light'
 #        data:
 #          transition: 1
-  - conditions:
-    - '{{ event == 4000 }}'
-    sequence:
-    - service: light.turn_off
-      target: !input 'light'
-      data:
-        transition: 1
+#  - conditions:
+#    - '{{ event == 4000 }}'
+#    sequence:
+#    - service: light.turn_off
+#      target: !input 'light'
+#      data:
+#        transition: 1
   - conditions:
     - '{{ event == 2000 }}'
     sequence: !input 'button_press_on'
