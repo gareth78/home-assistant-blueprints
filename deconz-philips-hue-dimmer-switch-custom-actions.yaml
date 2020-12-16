@@ -40,7 +40,7 @@ blueprint:
 
 mode: restart
 max_exceeded: silent
-# source_url:
+source_url: https://github.com/gareth78/home-assistant-blueprints/edit/main/deconz-philips-hue-dimmer-switch-custom-actions.yaml
 
 trigger:
   - platform: event
