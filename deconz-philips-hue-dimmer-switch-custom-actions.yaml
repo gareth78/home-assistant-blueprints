@@ -1,0 +1,90 @@
+blueprint:
+  name: Deconz - Philips Hue Dimmer Switch - Custom Actions
+  description: 'Control lights with a Philips Hue Dimmer Switch.
+
+
+    Each of the 4 cuttons will all for customisation of the action
+
+    '
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: The remote to use
+      selector:
+        device:
+          integration: deconz
+          manufacturer: Philips
+          model: RWL021
+
+    button_press_on:
+      name: On Button
+      default: []
+      selector:
+        action: {}
+    button_press_off:
+      name: Off Button
+      default: []
+      selector:
+        action: {}
+    button_press_brighten:
+      name: Dim Up Button
+      default: []
+      selector:
+        action: {}
+    button_press_darken:
+      name: Dim Down Button
+      default: []
+      selector:
+        action: {}
+
+mode: restart
+max_exceeded: silent
+# source_url:
+
+trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      device_id: !input 'remote'
+
+action:
+- variables:
+    event: '{{ trigger.event.data.event }}'
+- choose:
+  - conditions:
+    - '{{ event == 1000 }}'
+    sequence:
+    - choose:
+      - conditions: '{{ force_brightness }}'
+        sequence:
+        - service: light.turn_on
+          target: !input 'light'
+          data:
+            transition: 1
+            brightness_pct: !input 'brightness'
+      default:
+      - service: light.turn_on
+        target: !input 'light'
+        data:
+          transition: 1
+  - conditions:
+    - '{{ event == 4000 }}'
+    sequence:
+    - service: light.turn_off
+      target: !input 'light'
+      data:
+        transition: 1
+  - conditions:
+    - '{{ event == 2000 }}'
+    sequence: !input 'button_press_on'
+  - conditions:
+    - '{{ event == 2001 }}'
+    sequence: !input 'button_press_off'
+  - conditions:
+    - '{{ event == 3000 }}'
+    sequence: !input 'button_press_brighten'
+  - conditions:
+    - '{{ event == 3001 }}'
+    sequence: !input 'button_press_darken'
+   
